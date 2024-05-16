@@ -11,3 +11,22 @@
 /* ************************************************************************** */
 
 // UTILIDADES
+#include "get_next_line.h"
+
+int	ft_count_line_lenght(int fd)
+{
+	static char	b;
+	int			read_value;
+	int			count;
+
+	count = 0;
+	read_value = read(fd, &b, sizeof(char));
+	while (read_value > 0)
+	{
+		count++;
+		read_value = read(fd, &b, sizeof(char));
+	}
+	if (read_value < 0)
+		return (-1);
+	return (count);
+}

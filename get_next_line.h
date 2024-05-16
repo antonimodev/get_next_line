@@ -15,8 +15,11 @@
 
 # include <fcntl.h>
 # include <stdlib.h>
+# include <string.h>
+# include <stdio.h>
 # include <unistd.h>
 
 char	*get_next_line(int fd);
+int		ft_count_line_lenght(int fd);
 
 #endif
