@@ -1,22 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   prueba.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 14:23:46 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/16 14:08:24 by antonimo         ###   ########.fr       */
+/*   Created: 2024/05/16 13:50:21 by antonimo          #+#    #+#             */
+/*   Updated: 2024/05/16 14:14:28 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+// prueba
+#include "get_next_line.h"
 
-# include <fcntl.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	ft_prueba(void)
+{
+	int		fd;
+	char	*str;
 
-char	*get_next_line(int fd);
+	fd = open ("ejemplo.txt", O_RDWR);
+	if (fd == -1)
+		return (-1);
+	str = malloc(5 * sizeof(char));
+	if (str == NULL)
+	{
+		close(fd);
+		return (NULL);
+	}
+	if (write(fd, "hola", 4) == -1)
+	{
+		free(str);
+		return (-1);
+	}
+	read(fd, str, sizeof(char));
+	close(fd);
+	return (0);
+}
 
-#endif
+int	main(void)
+{
+	ft_prueba();
+	return (0);
+}
