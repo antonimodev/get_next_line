@@ -13,20 +13,30 @@
 // UTILIDADES
 #include "get_next_line.h"
 
-int	ft_count_line_lenght(int fd)
+int	ft_strlen(char *str)
 {
-	static char	b;
-	int			read_value;
-	int			count;
+	int	i;
 
-	count = 0;
-	read_value = read(fd, &b, sizeof(char));
-	while (read_value > 0)
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strdup(char *str)
+{
+	char	*str2;
+	int		i;
+
+	i = 0;
+	str2 = malloc((ft_strlen(str) + 1) * sizeof(char));
+	if (str2 == NULL)
+		return (NULL);
+	while (str[i] != '\0')
 	{
-		count++;
-		read_value = read(fd, &b, sizeof(char));
+		str2[i] = str[i];
+		i++;
 	}
-	if (read_value < 0)
-		return (-1);
-	return (count);
+	str2[i] = '\0';
+	return (str2);
 }

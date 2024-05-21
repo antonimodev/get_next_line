@@ -19,7 +19,16 @@
 # include <stdio.h>
 # include <unistd.h>
 
+// Definition of BUFFER_SIZE.
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 1024
+#endif
+
+// get_next_line.c
 char	*get_next_line(int fd);
-int		ft_count_line_lenght(int fd);
+
+// get_next_line_utils.c
+int 	ft_strlen(char *str);
+char 	*ft_strdup(char *str);
 
 #endif
