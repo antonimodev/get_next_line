@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:19:27 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/23 14:53:50 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:19:42 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	main(void)
 	line = get_next_line(fd);
 	while (line)
 	{
-		printf("%s\n", get_next_line(fd));
+		printf("%s\n", line);
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
