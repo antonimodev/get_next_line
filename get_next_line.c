@@ -6,63 +6,57 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:19:27 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/15 14:19:46 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:53:50 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    char    *line;
-    char    buffer;
-    char    *result;
-    int     read_result;
-    int     i;
+	char	*line;
+	char	buffer;
+	int		read_result;
+	int		i;
 
-    if (BUFFER_SIZE <= 0)
-        return (NULL);
-    line = malloc((BUFFER_SIZE + 1) * sizeof(char));
-    if (line == NULL)
-    {
-        free(line);
-        return (NULL);
-    }
-    read_result = read(fd, &buffer, 1);
-    i = 0;
-    while(read_result > 0)
-    {
-        line[i++] = buffer;
-        if (buffer == '\n')
-            break ;
-        read_result = read(fd, &buffer, 1);
-    }
-    line[i] = '\0';
-    if (read_result <= 0 && i == 0)
-        return (NULL);
-    result = ft_strdup(line);
-    free(line);
-    return (result);
+	line = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (line == NULL)
+		return (NULL);
+	read_result = read(fd, &buffer, 1);
+	i = 0;
+	while (read_result > 0 && i < BUFFER_SIZE)
+	{
+		line[i++] = buffer;
+		if (buffer == '\n')
+			break ;
+		read_result = read(fd, &buffer, 1);
+	}
+	line[i] = '\0';
+	if (read_result <= 0)
+		return (NULL);
+	return (line);
 }
 
-/* int main()
+int	main(void)
 {
-    int fd = open("ejemplo.txt", O_RDONLY);
-    if (fd == -1)
-    {
-        printf("Error opening file\n");
-        return 1;
-    }
+	int		fd;
+	char	*line;
 
-    char *line;
-    line = get_next_line(fd);
+	fd = open("ejemplo.txt", O_RDONLY);
+	line = get_next_line(fd);
+	while (line)
+	{
+		printf("%s\n", get_next_line(fd));
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return (0);
+}
 
-    printf("%s\n", line);
-    free(line);
+/*GET NEXT LINE DEBE DEVOLVER BUFFER SIZE CARACTERES, Y CADA
+VEZ QUE SE EJECUTE DE NUEVO, DEBE DEVOLVER BUFFER SIZE CARACTERES
+DESDE DÓNDE SE QUEDO LA ÚLTIMA VEZ*/
 
-    close(fd);
-    return 0;
-} */
-
-/* TENER EN CUENTA QUE SI UTILIZO LA FUNCION READ EN ALGUN MOMENTO SIN CERRAR EL ARCHIVO,
+/* TENER EN CUENTA QUE SI UTILIZO LA FUNCION READ EN ALGUN MOMENTO
+SIN CERRAR EL ARCHIVO,
 EL PUNTERO SE QUEDA DÓNDE TERMINÓ LA LECTURA */
