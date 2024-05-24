@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:23:46 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/23 12:29:16 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:34:24 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 
 // Definition of BUFFER_SIZE.
 
-# define BUFFER_SIZE 2
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 2
+# endif
 
 // get_next_line.c
 char	*get_next_line(int fd);
