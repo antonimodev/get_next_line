@@ -62,27 +62,24 @@ char	*get_next_line(int fd)
 char	*get_next_line(int fd)
 {
 	char	*line;
-	char	buffer;
-	char	read_result;
 	char	*final;
+	char	buffer;
 	int		i;
+	int		read_result;
 
-	line = malloc(BUFFER_SIZE + 1 * sizeof(char));
+	line = malloc (BUFFER_SIZE + 1 * sizeof(char));
 	if (!line)
 		return (NULL);
-	read_result = 1;
 	i = 0;
+	read_result = 1;
 	while (read_result > 0 && i < BUFFER_SIZE)
 	{
 		read_result = read(fd, &buffer, 1);
+		line[i++] = buffer;
 		if (buffer == '\n')
 			break ;
-		line[i] = buffer;
-		i++;
 	}
 	line[i] = '\0';
-	if (read_result < 0)
-		return (NULL);
 	final = ft_strdup(line);
 	free(line);
 	return (final);

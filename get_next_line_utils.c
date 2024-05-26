@@ -40,3 +40,29 @@ char	*ft_strdup(char *str)
 	str2[i] = '\0';
 	return (str2);
 }
+
+char	*ft_strjoin(char *str1, char *str2)
+{
+	char	*final_str;
+	int		i;
+	int		j;
+
+	final_str = malloc((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
+	if (!final_str)
+		return (NULL);
+	i = 0;
+	while (str1[i] != '\0')
+	{
+		final_str[i] = str1[i];
+		i++;
+	}
+	j = 0;
+	while (str2[j] != '\0')
+	{
+		final_str[i] = str2[j];
+		i++;
+		j++;
+	}
+	final_str[i] = '\0';
+	return(final_str);
+}
