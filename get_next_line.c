@@ -6,82 +6,30 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:19:27 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/24 17:36:39 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:30:49 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/* char	*ft_buffer_to_line(char *buffer)
+char	*get_next_line(int fd)
 {
 	char	*str;
-	int		count;
 
-	count = 0;
-	while (count < BUFFER_SIZE)
-	{
-		if (buffer[count] == '\0' || buffer[count] == '\n')
-			break ;
-		count++;
-	}
-	str = malloc((count + 1) * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	count = 0;
-	while (buffer[count] != '\0')
-	{
-		str[count] = buffer[count];
-		count++;
-	}
-	str[count] = '\0';
+	str = ft_read_line(fd);
 	return (str);
 }
-
-char	*get_next_line(int fd)
+char	*read_line(int fd)
 {
-	char	*line;
-	char	*buffer;
 	int		read_result;
-	int		i;
-
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (buffer == NULL)
-		return (NULL);
-	read_result = read(fd, buffer, BUFFER_SIZE);
-	i = 0;
-	while (read_result > 0 && i < BUFFER_SIZE)
-		i++;
-	buffer[i] = '\0';
-	line = ft_buffer_to_line(buffer);
-	free(buffer);
-	if (read_result < 0)
-		return (NULL);
-	return (line);
-} */
-
-char	*get_next_line(int fd)
-{
-	char	*line;
-	char	*final;
 	char	buffer;
-	int		i;
-	int		read_result;
+	char	*final;
 
-	line = malloc (BUFFER_SIZE + 1 * sizeof(char));
-	if (!line)
-		return (NULL);
-	i = 0;
-	read_result = 1;
-	while (read_result > 0 && i < BUFFER_SIZE)
+	while ()
 	{
 		read_result = read(fd, &buffer, 1);
-		line[i++] = buffer;
-		if (buffer == '\n')
-			break ;
+		
 	}
-	line[i] = '\0';
-	final = ft_strdup(line);
-	free(line);
 	return (final);
 }
 
@@ -97,6 +45,18 @@ int	main(void)
 	printf("Segundo; %s\n", line);
 	return (0);
 }
+
+int	i;
+char *line;
+char buffer;
+char read_result = 1;
+
+line = malloc(BUFFER_SIZE + 1 * sizeof(char));
+while (1)
+{
+	read_result = read(fd, line, BUFFER_SIZE);
+}
+line[i] = '\0';
 
 /*GET NEXT LINE DEBE DEVOLVER BUFFER SIZE CARACTERES, Y CADA
 VEZ QUE SE EJECUTE DE NUEVO, DEBE DEVOLVER BUFFER SIZE CARACTERES
