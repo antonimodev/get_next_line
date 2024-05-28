@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:19:27 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/27 20:30:49 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:12:51 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,28 @@
 
 char	*get_next_line(int fd)
 {
-	char	*str;
-
-	str = ft_read_line(fd);
-	return (str);
+	return ("hola");
 }
+char	*ft_porqueria(char *tmp)
+{
+}
+
 char	*read_line(int fd)
 {
-	int		read_result;
-	char	buffer;
-	char	*final;
+	static char	*tmp;
+	int			read_result;
 
-	while ()
+	tmp = malloc(BUFFER_SIZE * sizeof(char));
+	if (!tmp)
+		return (NULL);
+	read_result = read(fd, tmp, BUFFER_SIZE);
+	if (read_result <= 0)
 	{
-		read_result = read(fd, &buffer, 1);
-		
+		free(tmp);
+		return (NULL);
 	}
-	return (final);
+	tmp[read_result] = '\0';
+	return (tmp);
 }
 
 int	main(void)
@@ -39,24 +44,12 @@ int	main(void)
 	char	*line;
 
 	fd = open("ejemplo.txt", O_RDONLY);
-	line = get_next_line(fd);
+	line = read_line(fd);
 	printf("Primero; %s\n", line);
-	line = get_next_line(fd);
+	line = read_line(fd);
 	printf("Segundo; %s\n", line);
 	return (0);
 }
-
-int	i;
-char *line;
-char buffer;
-char read_result = 1;
-
-line = malloc(BUFFER_SIZE + 1 * sizeof(char));
-while (1)
-{
-	read_result = read(fd, line, BUFFER_SIZE);
-}
-line[i] = '\0';
 
 /*GET NEXT LINE DEBE DEVOLVER BUFFER SIZE CARACTERES, Y CADA
 VEZ QUE SE EJECUTE DE NUEVO, DEBE DEVOLVER BUFFER SIZE CARACTERES
