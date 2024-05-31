@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:23:46 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/29 17:00:48 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:12:25 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 # define GET_NEXT_LINE_H
 
 # include <fcntl.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <stdio.h>
 # include <unistd.h>
 
 // Definition of BUFFER_SIZE.
@@ -26,13 +26,14 @@
 # endif
 
 // get_next_line.c
-char	*get_next_line(int fd);
+char		*get_next_line(int fd);
+static char	*ft_lineremaining(char *str);
+static char	*read_buffersize(int fd, char *stat_buff);
 
 // get_next_line_utils.c
-int		ft_strlen(char *str);
-char	*ft_strdup_n(char *str);
-char	*ft_strjoin(char *str1, char *str2);
-int		ft_strchr(char *str, char c);
-char	*ft_lineremaining(char *str);
+int			ft_strlen(char *str);
+char		*ft_strdup_n(char *str);
+char		*ft_strjoin(char *str1, char *str2);
+int			ft_strchr(char *str, char c);
 
 #endif

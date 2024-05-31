@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:55:53 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/29 17:09:04 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:15:57 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strlen(char *str)
 {
 	int	i;
 
+	if (str == NULL)
+		return (0);
 	i = 0;
 	while (str[i])
 		i++;
@@ -32,7 +34,7 @@ char	*ft_strdup_n(char *str)
 	while (str[i] != '\n')
 		i++;
 	str2 = malloc((i + 1) * sizeof(char));
-	if (str2 == NULL)
+	if (!str2)
 		return (NULL);
 	i = 0;
 	while (str[i] != '\n')
@@ -77,6 +79,8 @@ int	ft_strchr(char *str, char c)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i] != '\0')
 	{
 		if (str[i] == c)
