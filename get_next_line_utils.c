@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:55:53 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/31 17:15:57 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:06:28 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_strjoin(char *str1, char *str2)
 {
 	int		i;
 	int		j;
-	char	*final_str;
+	char	*strfinal;
 
 	if (!str1)
 	{
@@ -66,21 +66,20 @@ char	*ft_strjoin(char *str1, char *str2)
 	}
 	if (!str1 || !str2)
 		return (NULL);
-	final_str = malloc(((ft_strlen(str1) + ft_strlen(str2)) + 1) * sizeof(char));
-	if (final_str == NULL)
+	strfinal = malloc(((ft_strlen(str1) + ft_strlen(str2)) + 1) * sizeof(char));
+	if (strfinal == NULL)
 		return (NULL);
 	i = -1;
-	j = 0;
 	if (str1)
 		while (str1[++i] != '\0')
-			final_str[i] = str1[i];
+			strfinal[i] = str1[i];
+	j = 0;
 	while (str2[j] != '\0')
-		final_str[i++] = str2[j++];
-	final_str[ft_strlen(str1) + ft_strlen(str2)] = '\0';
-	free(str1);
-	return (final_str);
+		strfinal[i++] = str2[j++];
+	strfinal[ft_strlen(str1) + ft_strlen(str2)] = '\0';
+	return (strfinal);
 }
-//i en -1 con preincremento en el bucle para ahorrar líneas.
+
 int	ft_strchr(char *str, char c)
 {
 	int	i;

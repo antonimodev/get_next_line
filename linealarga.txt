@@ -1,0 +1,1 @@
+esto es una prueba de muchisimos caracteres para comprobar si la funcion lee correctamente el archivo cuando tiene que ejecutarse varias veces y ademas de todo esto que acabo de escribir no tiene un salto de linea porque la linea es gigante.

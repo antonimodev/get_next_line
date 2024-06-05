@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:23:46 by antonimo          #+#    #+#             */
-/*   Updated: 2024/05/31 17:12:25 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:56:00 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@
 # endif
 
 // get_next_line.c
-char		*get_next_line(int fd);
-static char	*ft_lineremaining(char *str);
-static char	*read_buffersize(int fd, char *stat_buff);
+char	*get_next_line(int fd);
+char	*ft_lineremaining(char *str);
+char	*read_buffersize(int fd, char *stat_buff);
 
 // get_next_line_utils.c
-int			ft_strlen(char *str);
-char		*ft_strdup_n(char *str);
-char		*ft_strjoin(char *str1, char *str2);
-int			ft_strchr(char *str, char c);
+int		ft_strlen(char *str);
+char	*ft_strdup_n(char *str);
+char	*ft_strjoin(char *str1, char *str2);
+int		ft_strchr(char *str, char c);
 
 #endif
