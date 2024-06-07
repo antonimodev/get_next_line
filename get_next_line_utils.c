@@ -77,6 +77,8 @@ char	*ft_strjoin(char *str1, char *str2)
 	while (str2[j] != '\0')
 		strfinal[i++] = str2[j++];
 	strfinal[ft_strlen(str1) + ft_strlen(str2)] = '\0';
+	free(str1);
+	free(str2);
 	return (strfinal);
 }
 
