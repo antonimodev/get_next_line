@@ -6,22 +6,56 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:19:27 by antonimo          #+#    #+#             */
-/*   Updated: 2024/06/05 18:37:06 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:08:03 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_buffersize(int fd, char *stat_buff)
+char	*ft_lineremaining(char *line)
+{
+	char	*remaining;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (line[i] != '\0' && line[i] != '\n')
+		i++;
+	if (line[i] == '\0')
+	{
+		free(line);
+		return (NULL);
+	}
+	i++;
+	remaining = ft_calloc(ft_strlen(line) - i + 1, sizeof(char));
+	j = 0;
+	while (line[i] != '\0')
+		remaining[j++] = line[i++];
+	remaining[j] = '\0';
+	if (remaining[0] == '\0')
+	{
+		free(remaining);
+		return (NULL);
+	}
+	free(line);
+	return (remaining);
+}
+
+/* Read buffersize from FD, we use strjoin to get characters
+until find '\n' and return str with '\n' contained inside*/
+
+char	*ft_read_buffersize(int fd, char *str)
 {
 	char	*buffer;
 	int		read_result;
 
-	buffer = malloc(BUFFER_SIZE + 1 * sizeof(char *));
-	if (!buffer)
+	if (!str)
+		str = ft_calloc(1, sizeof(char));
+	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (buffer == NULL)
 		return (NULL);
 	read_result = 1;
-	while (ft_strchr(buffer, '\n') == 0 && read_result != 0)
+	while (read_result > 0)
 	{
 		read_result = read(fd, buffer, BUFFER_SIZE);
 		if (read_result < 0)
@@ -30,121 +64,123 @@ char	*read_buffersize(int fd, char *stat_buff)
 			return (NULL);
 		}
 		buffer[read_result] = '\0';
-		stat_buff = ft_strjoin(stat_buff, buffer);
+		str = ft_strjoin(str, buffer);
+		if (ft_strchr(buffer, '\n'))
+			break ;
 	}
-	return (stat_buff);
-}
-
-char	*ft_lineremaining(char *str)
-{
-	int		i;
-	int		j;
-	char	*remaining;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '\n')
-		i++;
-	if (str[i] == '\0')
-	{
-		free(str);
-		return (NULL);
-	}
-	remaining = malloc(ft_strlen(str) - i) + 1 * sizeof(char);
-	if (!remaining)
-		return (NULL);
-	i++;
-	j = 0;
-	while (str[i] != '\0')
-		remaining[j++] = str[i++];
-	remaining[j] = '\0';
-	free(str);
-	return (remaining);
+	free(buffer);
+	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*stat_buff[4096];
+	static char	*stat_buffer;
 	char		*final;
 
-	final = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	stat_buff[fd] = read_buffersize(fd, stat_buff[fd]);
-	if (stat_buff[fd] == NULL)
-		return (free(stat_buff[fd]), stat_buff[fd] = NULL, NULL);
-	final = ft_strdup_n(stat_buff[fd]);
+	if (read(fd, 0, 0) < 0)
+	{
+		if (stat_buffer != NULL)
+		{
+			free(stat_buffer);
+			stat_buffer = NULL;
+		}
+		return (NULL);
+	}
+	stat_buffer = ft_read_buffersize(fd, stat_buffer);
+	if (stat_buffer == NULL)
+		return (NULL);
+	final = ft_strdup_n(stat_buffer);
 	if (final == NULL)
-		return (free(final), final = NULL, final);
-	stat_buff[fd] = ft_lineremaining(stat_buff[fd]);
-	if (stat_buff[fd] == NULL)
-		return (free(stat_buff[fd]), stat_buff[fd] = NULL, final);
+		return (NULL);
+	stat_buffer = ft_lineremaining(stat_buffer);
+	if (stat_buffer == NULL)
+		return (NULL);
 	return (final);
 }
-/* int	main(void)
+
+int	main(void)
 {
-	int		fd;
-	char	*line;
+    int		fd1;
+    int		fd2;
+    int		fd3;
+    int		fd4;
+    int		fd5;
+    int		fd6;
+    char	*line;
 
-	fd = open("linealarga.txt", O_RDONLY);
-	line = get_next_line(fd);
-	printf("Primera línea del archivo vacío; %s\n", line);
-	free(line);
-	return (0);
-} */
+    fd1 = open("1char.txt", O_RDONLY);
+    if (fd1 == -1)
+        printf("1 Char ha fallado.\n");
+    
+    fd2 = open("ejemplo.txt", O_RDONLY);
+    if (fd2 == -1)
+        printf("lineas normales ha fallado.\n");
 
-/* int	main(void)
-{
-	int		fd;
-	int		fd2;
-	int		fd3;
-	int		fd4;
-	int		fd5;
-	int		fd6;
-	char	*line;
+    fd3 = open("empty.txt", O_RDONLY);
+    if (fd3 == -1)
+        printf("empty ha fallado.\n");
 
-	fd = open("ejemplo.txt", O_RDONLY);
-	fd2 = open("empty.txt", O_RDONLY);
-	fd3 = open("linealarga.txt", O_RDONLY);
-	fd4 = open("saltodelinea.txt", O_RDONLY);
-	fd5 = open("saltodelinea2.txt", O_RDONLY);
-	fd6 = open("1char.txt", O_RDONLY);
-	while ((line = get_next_line(fd)) != NULL)
+    fd4 = open("linealarga.txt", O_RDONLY);
+    if (fd4 == -1)
+        printf("linealarga ha fallado.\n");
+
+    fd5 = open("saltodelinea.txt", O_RDONLY);
+    if (fd5 == -1)
+        printf("saltodelinea ha fallado.\n");
+
+    fd6 = open("saltodelinea2.txt", O_RDONLY);
+    if (fd6 == -1)
+        printf("saltodelina2 ha fallado.\n");
+	
+	printf("1 Char; \n");
+	while ((line = get_next_line(fd1)) != NULL)
 	{
-		printf("Primero; %s\n", line);
+		printf("%s\n", line);
 		free(line);
 	}
+	close(fd1);
+
+	printf("Texto normal; \n");
 	while ((line = get_next_line(fd2)) != NULL)
 	{
-		printf("Segundo; %s\n", line);
+		printf("%s \n", line);
 		free(line);
 	}
+	close(fd2);
+
+	printf("Vacío; \n");
 	while ((line = get_next_line(fd3)) != NULL)
 	{
-		printf("Tercero; %s\n", line);
+		printf("%s \n", line);
 		free(line);
 	}
+	close(fd3);
+
+	printf("Línea larga; \n");
 	while ((line = get_next_line(fd4)) != NULL)
 	{
-		printf("Cuarto; %s\n", line);
+		printf("%s \n", line);
 		free(line);
 	}
+	close(fd4);
+
+	printf("Salto de línea; \n");
 	while ((line = get_next_line(fd5)) != NULL)
 	{
-		printf("Quinto; %s\n", line);
+		printf("%s \n", line);
 		free(line);
 	}
+	close(fd5);
+
+	printf("Salto de línea 2; \n");
 	while ((line = get_next_line(fd6)) != NULL)
 	{
-		printf("Sexto; %s\n", line);
+		printf("%s \n", line);
 		free(line);
 	}
-	close(fd);
-	close(fd2);
-	close(fd3);
-	close(fd4);
-	close(fd5);
 	close(fd6);
 
-	return (0);
+	return 0;
 }
- */
