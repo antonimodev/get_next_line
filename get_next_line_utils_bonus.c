@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 12:42:24 by antonimo          #+#    #+#             */
-/*   Updated: 2024/06/11 13:55:07 by antonimo         ###   ########.fr       */
+/*   Created: 2024/06/11 12:38:12 by antonimo          #+#    #+#             */
+/*   Updated: 2024/06/11 13:35:37 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_strlen(char *str)
 {
@@ -74,7 +74,7 @@ void	*ft_calloc(size_t size, size_t type)
 	size_t	i;
 
 	str = (malloc(size * type));
-	if (!str)
+	if (str == NULL)
 		return (NULL);
 	i = 0;
 	while (i < (size * type))

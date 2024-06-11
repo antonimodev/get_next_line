@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/10 12:43:06 by antonimo          #+#    #+#             */
-/*   Updated: 2024/06/11 13:56:34 by antonimo         ###   ########.fr       */
+/*   Created: 2024/06/11 12:38:19 by antonimo          #+#    #+#             */
+/*   Updated: 2024/06/11 13:53:54 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_line_remaining(char *stat_buff)
 {
@@ -82,7 +82,7 @@ char	*ft_read_buffersize(int fd, char *stat_buff)
 		}
 		buffer[read_result] = '\0';
 		stat_buff = ft_strjoin(stat_buff, buffer);
-		if (ft_strchr(buffer, '\n') == 1)
+		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	free(buffer);
@@ -91,34 +91,19 @@ char	*ft_read_buffersize(int fd, char *stat_buff)
 
 char	*get_next_line(int fd)
 {
-	static char	*stat_buff;
+	static char	*stat_buff[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	stat_buff = ft_read_buffersize(fd, stat_buff);
-	if (!stat_buff || ft_strlen(stat_buff) < 1)
+	stat_buff[fd] = ft_read_buffersize(fd, stat_buff[fd]);
+	if (!stat_buff[fd] || ft_strlen(stat_buff[fd]) < 1)
 	{
-		free(stat_buff);
-		stat_buff = NULL;
+		free(stat_buff[fd]);
+		stat_buff[fd] = NULL;
 		return (NULL);
 	}
-	line = ft_line(stat_buff);
-	stat_buff = ft_line_remaining(stat_buff);
+	line = ft_line(stat_buff[fd]);
+	stat_buff[fd] = ft_line_remaining(stat_buff[fd]);
 	return (line);
 }
-/* 
-incluir stdio arriba si quieres hacer pruebas
-int	main(void)
-{
-	int fd = open("texto.txt", O_RDONLY);
-	char *line;
-
-	while (line = get_next_line(fd))
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-} */
