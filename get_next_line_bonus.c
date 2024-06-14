@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:38:19 by antonimo          #+#    #+#             */
-/*   Updated: 2024/06/11 13:53:54 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:48:13 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*ft_read_buffersize(int fd, char *stat_buff)
 		{
 			free(buffer);
 			buffer = NULL;
+			free(stat_buff);
+			stat_buff = NULL;
 			return (NULL);
 		}
 		buffer[read_result] = '\0';
@@ -94,10 +96,16 @@ char	*get_next_line(int fd)
 	static char	*stat_buff[1024];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd > 1024)
 		return (NULL);
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(stat_buff[fd]);
+		stat_buff[fd] = NULL;
+		return (NULL);
+	}
 	stat_buff[fd] = ft_read_buffersize(fd, stat_buff[fd]);
-	if (!stat_buff[fd] || ft_strlen(stat_buff[fd]) < 1)
+	if (ft_strlen(stat_buff[fd]) < 1)
 	{
 		free(stat_buff[fd]);
 		stat_buff[fd] = NULL;

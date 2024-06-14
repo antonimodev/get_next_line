@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 12:38:12 by antonimo          #+#    #+#             */
-/*   Updated: 2024/06/11 13:35:37 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:10:12 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_strlen(char *str)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	len;
+	int		len;
 	char	*str;
 	int		i;
 	int		j;

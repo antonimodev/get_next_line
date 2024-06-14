@@ -6,7 +6,7 @@
 /*   By: antonimo <antonimo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 12:43:06 by antonimo          #+#    #+#             */
-/*   Updated: 2024/06/11 13:56:34 by antonimo         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:46:58 by antonimo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ char	*ft_read_buffersize(int fd, char *stat_buff)
 		{
 			free(buffer);
 			buffer = NULL;
+			free(stat_buff);
+			stat_buff = NULL;
 			return (NULL);
 		}
 		buffer[read_result] = '\0';
@@ -95,9 +97,13 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	{
+		free(stat_buff);
+		stat_buff = NULL;
 		return (NULL);
+	}
 	stat_buff = ft_read_buffersize(fd, stat_buff);
-	if (!stat_buff || ft_strlen(stat_buff) < 1)
+	if (ft_strlen(stat_buff) < 1)
 	{
 		free(stat_buff);
 		stat_buff = NULL;
@@ -107,18 +113,3 @@ char	*get_next_line(int fd)
 	stat_buff = ft_line_remaining(stat_buff);
 	return (line);
 }
-/* 
-incluir stdio arriba si quieres hacer pruebas
-int	main(void)
-{
-	int fd = open("texto.txt", O_RDONLY);
-	char *line;
-
-	while (line = get_next_line(fd))
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	return (0);
-} */
